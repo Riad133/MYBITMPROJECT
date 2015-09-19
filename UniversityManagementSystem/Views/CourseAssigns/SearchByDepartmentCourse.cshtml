@@ -1,0 +1,31 @@
+﻿<br/>
+<div align="center">
+    <label><pre>Department</pre></label>
+    <select id="dep" class="form-control">
+        @Html.Raw(ViewBag.dep)
+    </select>
+    
+
+</div>
+<br/>
+<table border="1" class="table" id="deptable">
+    @Html.Raw(ViewBag.table)
+</table>
+   
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#dep").change(function () {
+                if ($("#dep").val() != "") {
+                    var tea = { id: $("#dep").val() };
+                    $.post("SearchByDepartment", tea, function (data) {
+                        $("#deptable").html(data);
+                    });
+                }
+               
+            });
+        });
+
+    </script>

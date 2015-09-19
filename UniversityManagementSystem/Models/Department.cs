@@ -29,6 +29,9 @@ namespace UniversityManagementSystem.Models
         [Remote("DoesNameExist", "Department", HttpMethod = "POST", ErrorMessage = "Department Name exist")]
 
         public string DepartmentName { get; set; }
-        public virtual List<Course> Courses { set; get; } 
+
+        public virtual List<Course> Courses { set; get; }
+        public virtual List<CourseAssign> CourseAssigns { get; set; }
+        public virtual List<Student> Students { get; set; } 
     }
 }

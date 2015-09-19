@@ -1,0 +1,157 @@
+﻿@model UniversityManagementSystem.Models.CourseAssign
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>CourseAssign</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DepartmentId", null,  String.Empty, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TeacherId, "TeacherId", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownList("TeacherId", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TeacherId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2"> Credit To Be Taken</label>
+            <label id="allCredit" class="control-label col-md-2"><pre></pre></label>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2"> Remaining Credit</label>
+            <label id="remCredit" class="control-label col-md-2"><pre></pre></label>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CourseId", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            <label class="control-label col-md-2"> Name</label>
+            <label id="CourseName" class="control-label col-md-2"><pre></pre></label>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Credit</label>
+            <label id="CourseCredit" class="control-label col-md-2"><pre></pre></label>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script>
+    $(document).ready(function () {
+        //$("#submit").click(function() {
+        //    var total = $("#allCredit").val();
+        //    var rem = $("#remCredit").val();
+        //    var sub = $("#CourseCredit").val();
+
+        //    if (total < (rem + sub)) {
+        //        //var chk = confirm("Are you sure want to take over credit");
+        //        //if (chk == true) {
+        //        //   // $("#hello").submi
+        //        //}
+        //    } else {
+        //        //var chk = confirm("Are you sure want to take over credit");
+        //        $("from").submit(function() {
+                    
+        //        });
+        //    }
+        //});
+
+
+
+
+        $("#DepartmentId").change(function () {
+            var dep = { depData: $("#DepartmentId").val() };
+            if ($("#DepartmentId").val() != "") {
+                $.post("DepartmentChosse", dep, function(data) {
+                    var d = data.split("\n");
+                    
+                    $("#TeacherId").html("<option value=\"\">" + "" + "</option>");
+                    $("#CourseId").html("<option value=\"\">" + "" + "</option>");
+                    $("#CourseName").html("<pre></pre>");
+                    $("#CourseCredit").html("<pre></pre>");
+                    $("#allCredit").html("<pre></pre>");
+                    $("#remCredit").html("<pre></pre>");
+                    $("#TeacherId").html(d[0]);
+                    $("#CourseId").html(d[1]);
+                });
+            } else {
+                $("#TeacherId").html("<option value=\"\">" + "" + "</option>");
+                $("#CourseId").html("<option value=\"\">" + "" + "</option>");
+                $("#CourseName").html("<pre></pre>");
+                $("#CourseCredit").html("<pre></pre>");
+                $("#allCredit").html("<pre></pre>");
+                $("#remCredit").html("<pre></pre>");
+            }
+            
+
+        });
+        $("#TeacherId").change(function () {
+            var tea = { teacherData: $("#TeacherId").val() };
+            if ($("#TeacherId").val() != "") {
+                $.post("TeacherChosse", tea, function (data) {
+                    var d = data.split("\n");
+                    $("#allCredit").html("<pre>" + d[0] + "</pre>");
+                    $("#remCredit").html("<pre>" + d[1] + "</pre>");
+
+                });
+            } else {
+                
+                $("#allCredit").html("<pre></pre>");
+                $("#remCredit").html("<pre></pre>");
+            }
+
+        });
+        $("#CourseId").change(function () {
+            var CourseData = { teacherData: $("#CourseId").val() };
+            if ($("#CourseId").val() != "") {
+            $.post("CourseChosse", CourseData, function (data) {
+                var d = data.split("\n");
+                $("#CourseName").html("<pre>" + d[0] + "</pre>");
+                $("#CourseCredit").html("<pre>" + d[1] + "</pre>");
+
+            });
+            } else {
+               
+                $("#CourseName").html("<pre></pre>");
+                $("#CourseCredit").html("<pre></pre>");
+            }
+
+        });
+    });
+</script>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

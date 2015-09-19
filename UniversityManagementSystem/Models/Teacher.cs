@@ -27,7 +27,7 @@ namespace UniversityManagementSystem.Models
 
         public string Email { get; set; }
         public string ContactNo { get; set; }
-      //  [DisplayName("Designation")]
+         [DisplayName("Designation")]
         public int DesignationId { get; set; }
 
         public int DepartmentId { get; set; }
@@ -37,6 +37,7 @@ namespace UniversityManagementSystem.Models
 
         public virtual Department Department { get; set; }
         public virtual Designation Designation { get; set; }
+       public virtual List<CourseAssign> CourseAssigns { get; set; }
 
     }
 }

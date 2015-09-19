@@ -35,5 +35,6 @@ namespace UniversityManagementSystem.Models
 
         public virtual Department Department { set; get; }
         public virtual Semester Semester { set; get; }
+        public virtual List<CourseAssign> CourseAssigns { get; set; }
     }
 }
