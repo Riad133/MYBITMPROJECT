@@ -14,6 +14,6 @@ namespace UniversityManagementSystem.BAL
         public int SemesterId { get; set; }
         [Range(1,8,ErrorMessage = "Must be 1-8")]
         [DisplayName ("Semester")]
-        public string SemesterNO { get; set; }
+        public int SemesterNO { get; set; }
     }
 }

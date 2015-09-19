@@ -1,0 +1,9 @@
+diff a/UniversityManagementSystem/BAL/Semester.cs b/UniversityManagementSystem/BAL/Semester.cs	(rejected hunks)
+@@ -14,6 +14,6 @@
+         public int SemesterId { get; set; }
+         [Range(1,8,ErrorMessage = "Must be 1-8")]
+         [DisplayName ("Semester")]
+-        public int SemesterNO { get; set; }
++        public string SemesterNO { get; set; }
+     }
+ }
